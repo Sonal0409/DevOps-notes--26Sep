@@ -1,0 +1,169 @@
+> DSL scripts for automation:
+
+Jenkins DSL is a programmatic way to implement the jenkins JOB
+In order to write DSL script, you will have to use DSL plugin which will automatically create jobs in jenkins for you
+Using the DSL plugin you will be able to create jenkins job on the fly just with help of simple groovy code.
+Groovy scripts are very easy to write and read, it is like java
+
+Demo:
+
+Install DSL plugin
+
+Go to Manage Jenkins → Manage plugins → Available → search for DSL → select the plugin Job DSL plugin → click on install without restart.
+Now Go to Manage jenkins → Configure global security →Scroll down to CSRF protection and
+Uncheck  → Enable script security for Job DSL scripts
+
+
+Important:
+**************
+We have to create a job with name as seedjob → in this job we will write the DSL scripts
+The operation of seed job is to create new jobs programmatically
+Seed job will always be a Freestyle job
+In the seed job under Build steps you will write the DSL scripts and execute the seed job.
+
+*******************
+DSL script1:
+***************
+Write DSL script to automatically create a job with name as Firstjob and description as “my first DSL job”
+
+Demo: 
+Create a Seed Job in jenkins
+New item→ SeedJob → freestyle project–press OK
+Go to Build steps → Process Job DSLs —> 
+Select the option -> Use the provided DSL script
+Define variable in groovy and use it in Job
+
+def jobname = 'Firstjob'
+
+job(jobname){
+}
+
+
+*******
+Create job with Description
+
+def jobname = 'Firstjob'
+
+job(jobname){
+
+ description('my testjob')
+triggers{
+ cron ('* * * * *')
+}
+}
+
+
+**************
+
+ADD SCM option
+
+def jobname = 'Firstjob'
+def repo = 'sonal0409/DevOpsClassCodes'
+
+job(jobname){
+
+ description('my testjob')
+
+scm {
+        github repo
+    }
+}
+
+****************
+Add triggers & build step
+
+def jobname = 'Firstjob'
+def repo = 'sonal0409/DevOpsClassCodes'
+
+job(jobname){
+
+ description('my testjob')
+
+scm {
+        github repo
+    }
+triggers{
+ cron ('H/15 * * * *')
+}
+
+steps {
+ shell ("echo 'Hello World'")
+}
+}
+
+*********************
+
+Delete job created programitically
+
+jenkins.model.Jenkins.theInstance.getProjects().each { job ->
+    if (job.name.contains('job')) {
+        println job.name
+        job.delete()
+    }
+}
+
+OR
+
+jenkins.model.Jenkins.theInstance.getProjects().each { job ->
+    if (job.name.contains('Job')) {
+        println job.name
+        job.delete()
+    }
+
+
+
+
+
+
+
+Upstream/Downstream pipeline using DSL script job
+
+job('job-checkout') {
+    
+    scm {
+        github('sonal0409/DevOpsClassCodes', 'master')
+    }
+      
+   publishers {
+        downstream 'job-compile', 'SUCCESS'
+    }
+    
+}
+job('job-compile'){
+   
+  scm {
+        github('sonal0409/DevOpsClassCodes', 'master')
+    }
+
+  steps{
+  maven('compile')
+  }
+ publishers {
+        downstream 'job-test', 'SUCCESS'
+   }
+}
+
+job('job-test'){
+   
+  scm {
+        github('sonal0409/DevOpsClassCodes', 'master')
+    }
+  steps{
+   maven('test')
+  }
+ publishers {
+        downstream 'job-package', 'SUCCESS'
+   }
+}
+
+job('job-package'){
+   
+   scm {
+        github('sonal0409/DevOpsClassCodes', 'master')
+    }
+  steps{
+  maven('package')
+  }
+}
+
+********************************************
