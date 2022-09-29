@@ -1,0 +1,311 @@
+
+Docker Notes:
+**************************
+
+#### On Centos:
+
+# yum install docker -y
+
+Start docker
+
+# systemctl start docker
+
+
+### INSTALL DOCKER 
+
+sudo apt-get update
+sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt-get update ; clear
+sudo apt-get install -y docker-ce
+
+service docker start
+
+
+
+*******************************
+
+Docker HUb -> registry where docker free images are available, you can also store images in Docker hub
+
+However there are many private registry are available where organization tend to save their custom images
+
+Some of the Registries:
+
+Docker HUB
+
+AwS - ECS
+
+DTR - Docker trusted registry
+
+Private registry on your local machine on port 5000
+
+
+Lets check docker hub and see how bases images are:
+
+
+Docker Images:
+*****************
+
+Every image will have a name and a tag mantodory
+
+Every image can have many tags but signle name
+
+How will docker know form where to pull the image and which tag to pull??
+
+
+# docker pull ubuntu
+
+Every images carries its address with it
+
+
+The image name includes
+
+ registryname/reponame/imagename:tagname
+  
+
+
+ when i say just ubuntu : docker will assume by default
+
+
+  dockerhub/library/ubuntu:latest
+
+docker.io/library/ubuntu:latest
+
+When working in projects-> image name will look like this:
+
+docker pull  awsECR023435345/myapp:01
+
+example.com/admin/webserver:v1
+
+Private registry which on a server (12.34.56.78) and port number 5000
+
+ imagenmae will look like this:
+
+  12.34.56.78:5000/sonal/myimage:tag1
+
+
+
+Images Command:
+
+Command to check images on local:
+
+# docker images
+
+# docker pull ubuntu:18.04
+
+Run the Image to launch the Container:
+
+# docker run Imagename:tagname
+
+# docker run ubuntu
+
+to check container details:
+
+# docker ps -a
+
+Various RUN options:
+
+--name ==> you can set a unique name to the container
+
+# docker run --name cont1 ubuntu
+
+# docker ps -a
+
+Run options to start the container:
+
+2 ways to start conatiner
+
+We have to provide any one the options to start the container, otherwise the contaienr will always be in exited
+
+
+> Forground mode (-it)
+
+This mode is used for images of type OS images
+
+In this case:
+
+> Container will be created
+> Contaienr status will be UP
+> and you will logged on the container process
+> user will be attached to the terminal fo the container
+
+Demo:
+
+# docker run --name cont2 -it ubuntu
+
+Come out of the container:
+
+# ctl + pq
+
+> you will out of conatiner and containe will be running
+
+OR
+
+give exit
+
+> you will out of conatiner and containe will go in exited status
+
+# docker ps -a
+
+
+How can we attach to the terminal of the OS container again:
+
+# docker attach contName/ContID
+
+This command works only if a container is up & running
+
+
+
+> detached Mode (-d)
+
+
+If your image is of type web, we will use detached mode
+
+# docker run -d --name cont1 nginx
+
+
+In this case:
+
+> Container will be created
+> Contaienr status will be UP
+> and you will not logged on the container process
+> user will not be attached to the terminal of the container
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*********************
+
+Extra example to show--> whatever is on the image, its on the container
+
+On nginx Image:
+
+docker-entrypoint.sh  -- will be running
+
+debian:bullseye-slim
+
+NGINX_VERSION   1.23.1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
