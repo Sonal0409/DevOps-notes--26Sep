@@ -1,0 +1,105 @@
+
+1. To query all the nodes in the cluster
+
+# kubectl get nodes
+
+2. To see more details about the nodes:
+
+# kubectl get nodes -o wide
+
+3. To check pods in the cluster
+
+# kubectl get pods
+
+In kubernetes we create manifest files or kubernetes object defintion files
+
+These files are written in YAML and every YAML will have an ectesions as .yml or .yaml
+
+Any code written in YAML will be in the format of :
+
+key: value
+
+For example, the YAML code is written like this:
+
+
+company: edureka
+course: devops
+trainer: sonal mittal
+time: 7 am
+day: weekday
+
+In YAMl how to give list of values
+
+company: edureka
+courses:
+ - devops
+ - aws
+ - gcp
+ - DOL
+ - Azure
+trainer:
+ - sonal
+ - Ravi
+ - Ajay
+ - Sam
+ - Linda
+time:
+ - 7AM
+ - 8.30PM
+days:
+ - weekdays
+ - weekends 
+
+In YAML how to create an array of object
+
+
+trainer:
+ - name: Sonal
+   email: sonal@gmail.com
+   phone: 76788
+ - name: Ravi
+   email: ravi@gmail.com
+   phone: 242453
+   
+   
+Best way to create an object in kubernetes is to use Manifest files
+
+These files are written in YAML
+
+Object: POD, ReplicaSet, Deployment, Service
+
+Sections that are written inside a manifest file on any object in Kubernetes
+
+apiVersion: schema
+kind: the name of object that you want to create
+metadata:
+Provide details of the object like : name, labels
+
+Labels: 
+They are used to tag the pods with a unique label
+This label will be used for grouping pods & querying pods in the cluster
+
+spec:
+Here you will specify what is it that you want on the object
+
+Object Definition file for a POD with single container:
+********************
+
+apiVersion: v1
+kind: Pod
+metadata:
+ name: mypod
+ labels:
+  author: sonal
+  app: mynginx
+spec:
+ containers:
+  - name: c1
+    image: nginx
+
+
+create the object in kube
+
+$ kubectl create -f pod-defintion.yml
+
+
