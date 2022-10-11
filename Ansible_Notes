@@ -1,0 +1,58 @@
+ansible webserver -m setup -a "filter=ansible_architecture"
+ansible webserver -m ping
+ansible webserver -m command -a "uptime"
+ansible webserver -m command -a "df -h"
+
+
+vim playbook1.yml
+
+
+- hosts: webserver
+  become: true
+  become_user: root
+  tasks:
+  - name: Install the package tomcat
+    yum: name=tomcat state=present
+  - name: Start the tomcat server
+    service: name=tomcat state=started
+  - name: Deploy a sample war file on tomcat
+    get_url:
+     url=https://tomcat.apache.org/tomcat-7.0-doc/appdev/sample/sample.war
+     dest=/usr/share/tomcat/webapps
+  - name: restart tomcat server
+    service: name=tomcat state=restarted
+
+
+ ansible-playbook playbook1.yml
+
+
+vim playbook2.yml
+
+- hosts: webserver
+  become: true
+  tasks:
+  - name: Install multiple package
+    yum: name={{item}} state=present
+    loop:
+     - git
+     - docker
+     - tree
+     - nano
+  - name: Start docker service
+    service: name=docker state=started
+  - name: Clone a repo from github
+    git: repo=https://github.com/Sonal0409/AnsibleDockerdemo.git dest=/tmp/gitrepo
+  - name: Change directory to gitrepo and build the dockerfile
+    command: chdir=/tmp/gitrepo docker build -t myansibleimage .
+  - name: RUn the image to create a container
+    command: docker run -d -P myansibleimage
+
+
+ ansible-playbook playbook2.yml
+
+
+ ansible webserver -m command -a "docker images" --become
+ ansible webserver -m command -a "docker ps" --become
+ 
+ 
+ 
