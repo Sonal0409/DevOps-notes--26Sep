@@ -1,0 +1,52 @@
+Step 1: 
+
+Take screenshot of git hub repo:
+
+https://github.com/Sonal0409/DevOpsCodeDemo.git
+
+step 2: go to Jenkins and package the code
+
+in target folder address book war file
+
+Screenshot for freestyle job—configure page
+
+Screenshot of console output
+Screenshot of target folder
+
+Step 3:  
+
+Job in jenkins  docker 
+	Script to create dockerfile and build the image and container
+
+Execute the job screenshot
+Screenshot docker images command
+Screenshot of container created command 
+
+Step 4:
+Job in Jenkins  ansible playbook
+
+Pipeline code that we wrote in the class
+https://github.com/Sonal0409/AnsibleDockerdemo.git
+
+Run the playbook
+
+Screenshot of pipeline code
+Repo , playbook, inventory
+
+Final console output 
+
+2nd project:
+In addition above steps, include the steps given below
+
+Kubernetes  Docker image
+Create deployment 3 replicas
+Screenshot of that
+Autoscaling
+Deploy Prometheus and Grafana
+screenshot
+
+
+
+
+
+
